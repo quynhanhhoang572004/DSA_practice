@@ -128,4 +128,37 @@ public class Tree {
         return current;
     }
 
+    public boolean delete(int key){
+        Node current = root;
+        Node parent = root; // we need node parent to keep up the parent so after that
+        // we can chage the field
+        boolean isLeftChild= true;
+        if (current == null){
+            return false;
+        }
+        while(current.iData != key){
+            parent = current;
+             if(key<current.iData){
+                 isLeftChild = true;
+                 current = current.leftChild;
+             }
+             else if (key>current.iData){
+                 isLeftChild = false;
+                 current = current.rightChild;
+            }
+        }
+      if(current.leftChild == null && current.rightChild == null){ // truong hop node with no parrent
+          if (current == root){
+              root = null; // if current still = root the tree is empty
+          }
+          else if(isLeftChild){
+              parent.leftChild = null;
+          }
+          else{
+              parent.rightChild = null; // after find the node they will disconnect it with their parrent
+          }
+      }
+
+    }
+
 }
