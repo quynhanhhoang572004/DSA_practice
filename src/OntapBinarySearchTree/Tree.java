@@ -1,7 +1,10 @@
 package OntapBinarySearchTree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Tree {
-    private Node root;
+    public Node root;
     public Tree(Node root){
         root=null;
     }
@@ -69,6 +72,60 @@ public class Tree {
         postOrder(root.rightChild);
         System.out.println(root);}
     }
+    public void BFS(){
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            Node temp=queue.poll(); // return the head of the tree
+            if(temp.leftChild != null){
+                queue.add(temp.leftChild);
+            }
+            else if(temp.rightChild != null){
+                queue.add(temp.rightChild);
+            }
+        }
 
+    }
+    public static int countElement(Node t){
+        if (t == null){
+            return 0;
+        }
+        else {
+            return 1 + countElement(t.leftChild) + countElement(t.rightChild);
+        }
+    }
+    public static int treeHeight(Node t){
+        int left = treeHeight(t.leftChild);
+        int right = treeHeight(t.rightChild);
+
+        if(t == null){
+            return 0;
+        }
+        else{
+            return 1 + Math.max(left,right);
+        }
+    }
+
+    public Node findMax(Node root) {
+        Node current = root;
+        if (root == null) {
+            return null;
+        }
+        while (current.rightChild != null) {
+            current = current.rightChild;
+
+        }
+        return current;
+    }
+    public Node findMin(Node root){
+        Node current = root;
+        if (root == null){
+            return null;
+        }
+        while(current.leftChild != null){
+            current = current.leftChild;
+        }
+        return current;
+    }
 
 }
