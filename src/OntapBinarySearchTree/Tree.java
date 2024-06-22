@@ -127,6 +127,22 @@ public class Tree {
         }
         return current;
     }
+    public Node getSuccessor(Node delNode){
+        Node current = delNode.rightChild;
+        Node sucessorParent = delNode;
+        Node sucessor = delNode;
+        while(current != null){
+            sucessorParent = sucessor; // the parent must ne the node we wanna delete
+            sucessor = current; // sucessor is now become the leftchilde children of the parent
+            current = current.leftChild; // go to the left untill the end
+        }
+        if(sucessor != delNode.rightChild){
+            sucessorParent.leftChild = sucessor.rightChild;
+            sucessor.rightChild = delNode.rightChild;
+        }
+        return sucessor;
+
+    }
 
     public boolean delete(int key){
         Node current = root;
@@ -158,6 +174,45 @@ public class Tree {
               parent.rightChild = null; // after find the node they will disconnect it with their parrent
           }
       }
+      else if (current.rightChild == null){ // node delete chi co 1 children o ben trai
+          if(current == root){ // neu cai can delete la root
+              current = current.leftChild;
+
+          }
+          else if(isLeftChild){
+              parent.leftChild = current.leftChild; // neu can delete la 1 left child cua 1 parrent thi parent cua no se xuong cai duoi
+          }
+          else{
+              parent.rightChild = current.leftChild;
+          }
+
+        }
+      else if (current.leftChild == null){
+          if(current == root){
+              current = current.rightChild;
+          }
+          else if (isLeftChild){ // neu current la left child cua 1 parent
+              parent.leftChild = current.rightChild;
+
+          }
+          else {
+              parent.rightChild = current.rightChild;
+          }
+      }
+      else{
+          Node successor  = getSuccessor(current);
+          if (current == root){
+              root = successor;
+          }
+          else if(isLeftChild){
+              parent.leftChild = successor;
+          }
+          else{
+              parent.rightChild = successor;
+          }
+          successor.leftChild = current.leftChild;
+      }
+      return true;
 
     }
 
