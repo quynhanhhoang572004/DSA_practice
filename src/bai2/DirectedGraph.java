@@ -35,6 +35,7 @@ public class DirectedGraph {
 
         int [] degreeIn = new int[n];
         int[] degreeOut = new int[n];
+        //calculate degree in and the degree out
         for(int i =0; i<n;i++){
             for(int j =0; j<n; j++){
                 degreeOut[i] += matrix[i][j];
